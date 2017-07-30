@@ -25,6 +25,12 @@
     {
       "type": "shell",
       "inline": [
+        "echo \"deb https://dl.bintray.com/sbt/debian /\" | sudo tee -a /etc/apt/sources.list.d/sbt.list",
+        "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823",
+        "sudo apt-get update",
+        "sudo apt-get upgrade --yes",
+        "sudo apt-get install --yes openjdk-8-jre",
+        "sudo apt-get install --yes sbt",
         "echo \"* soft nofile 500000\" | sudo tee --append /etc/security/limits.conf",
         "echo \"* hard nofile 500000\" | sudo tee --append /etc/security/limits.conf",
         "echo 500000 | sudo tee /proc/sys/fs/file-max",

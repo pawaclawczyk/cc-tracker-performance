@@ -1,8 +1,11 @@
 AWS_CONFIG_DIR     = config/aws
 AMI_CONFIG         = $(AWS_CONFIG_DIR)/ami.json
 
-PACKER_FLAGS       = -var 'aws_access_key=$(AWS_ACCESS_KEY_ID)' -var 'aws_secret_key=$(AWS_SECRET_ACCESS_KEY)'
-TERRAFORM_FLAGS    = -input=false -var 'aws_access_key=$(AWS_ACCESS_KEY_ID)' -var 'aws_secret_key=$(AWS_SECRET_ACCESS_KEY)'
+PACKER_FLAGS       = -var 'aws_access_key=$(AWS_ACCESS_KEY_ID)' \
+                     -var 'aws_secret_key=$(AWS_SECRET_ACCESS_KEY)'
+TERRAFORM_FLAGS    = -input=false \
+                     -var 'aws_access_key=$(AWS_ACCESS_KEY_ID)' \
+                     -var 'aws_secret_key=$(AWS_SECRET_ACCESS_KEY)'
 
 .PHONY: build_ami
 build_ami:

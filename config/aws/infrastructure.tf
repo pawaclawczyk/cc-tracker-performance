@@ -72,7 +72,7 @@ resource "aws_instance" "tracker_performance" {
 
   key_name      = "tracker_performance"
 
-  security_groups = ["tracker", "tracker_performance"]
+  security_groups = ["tracker_performance"]
 
   tags {
     Name = "tracker_performance"
