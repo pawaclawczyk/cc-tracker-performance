@@ -35,9 +35,11 @@ class ExampleSimulation extends Simulation {
 
   val scn: ScenarioBuilder = scenario("Basic")
       .exec(http("request").get("/pixel.gif"))
-      .pause(5)
 
   setUp(scn.inject(
     constantUsersPerSec(usersPerSecond) during(duration seconds)
-  )).protocols(httpConf)
+  ))
+    .protocols(httpConf)
+    .maxDuration(5 seconds)
+    .pauses(disabledPauses)
 }

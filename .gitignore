@@ -1,3 +1,5 @@
 /.idea/
 target/
 /results/
+*.tfstate
+*.tfstate.backup
