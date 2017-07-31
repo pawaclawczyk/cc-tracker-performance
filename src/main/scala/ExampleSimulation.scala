@@ -40,6 +40,6 @@ class ExampleSimulation extends Simulation {
     constantUsersPerSec(usersPerSecond) during(duration seconds)
   ))
     .protocols(httpConf)
-    .maxDuration(5 seconds)
+    .maxDuration(duration + 5 seconds)
     .pauses(disabledPauses)
 }
