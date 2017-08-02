@@ -2,8 +2,10 @@ import io.gatling.core.Predef._
 import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef._
 import io.gatling.http.protocol.HttpProtocolBuilder
+
 import scala.concurrent.duration._
 import scala.io.StdIn
+import scala.util.Random
 
 class ExampleSimulation extends Simulation {
 
@@ -25,16 +27,29 @@ class ExampleSimulation extends Simulation {
     case s => s.toInt
   }
 
+  val ua = csv("ua.csv").random
+
+  def generateIpPart(): String = (Random.nextInt(254) + 1).toString
+  def generateIp: String = generateIpPart + "." + generateIpPart + "." + generateIpPart + "." + generateIpPart()
+
+  val ip = Iterator.continually(Map("ip" -> generateIp))
+
   val httpConf: HttpProtocolBuilder = http
       .baseURL(baseUrl)
       .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
       .doNotTrackHeader("1")
       .acceptLanguageHeader("en-US,en;q=0.5")
       .acceptEncodingHeader("gzip, deflate")
-      .userAgentHeader("Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0")
+      .userAgentHeader("${userAgent}")
+      .header("X-Forwarded-For", "${ip}")
 
   val scn: ScenarioBuilder = scenario("Basic")
-      .exec(http("request").get("/pixel.gif"))
+      .feed(ua)
+      .feed(ip)
+      .exec(
+        http("request")
+          .get("/pixel.gif")
+      )
 
   setUp(scn.inject(
     constantUsersPerSec(usersPerSecond) during(duration seconds)
